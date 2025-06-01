@@ -9,7 +9,8 @@ using namespace std;
 class Solution {
     public :
     TreeNode* longestCommonAncestor(TreeNode* root){
-
+        if(root!=nullptr)return ;
+        
     }
 };
 class TreeNode{
