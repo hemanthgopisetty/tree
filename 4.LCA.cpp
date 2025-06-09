@@ -6,21 +6,40 @@
  */
 #include<bits/stdc++.h>
 using namespace std;
-class Solution {
-    public :
-    TreeNode* longestCommonAncestor(TreeNode* root){
-        if(root!=nullptr)return ;
-        
-    }
-};
+
 class TreeNode{
     public :
     TreeNode * left;
     TreeNode * right;
     int val;
-    TreeNode(int x):val(x),left(nullptr),right(nullptr){}
+    TreeNode(int x):val(x),left(nullptr),right(nullptr){
+
+    }
 
 };
+
+
+class Solution {
+    public :
+    TreeNode* longestCommonAncestor(TreeNode* root,TreeNode*p,TreeNode*q){
+        if(root==nullptr or root==p or root ==q)return root;
+        
+        TreeNode* l = longestCommonAncestor(root->left,p,q);
+        TreeNode* r = longestCommonAncestor(root->right,p,q);
+
+        //if we found l and r ,it means 
+        //both l and r in diff subtree's
+        //return root as lca
+        if(l and r)return root;
+
+        //if any of the l or r null then return l or r if it's true or none
+        if(l!=nullptr)return l;
+        if(r!=nullptr)return r;
+        return nullptr ;
+    }
+};
+
+
  int main(){
     TreeNode* root;
     root = new TreeNode(3);
@@ -34,7 +53,7 @@ class TreeNode{
     root->left->right->right= new TreeNode(4);
     Solution sol;
     
-    TreeNode* lca = sol.longestCommonAncestor(root);
+    TreeNode* lca = sol.longestCommonAncestor(root,root->left->right,root->left->right->right);
     if(lca){
         cout<<"LCA -> "<<lca->val;
     }
@@ -43,3 +62,22 @@ class TreeNode{
     }
     return 0;
  }
+
+ /*
+ 
+        3
+       / \
+      5   1
+     / \ / \
+    6  2 0  8
+      / \
+     7   4
+
+
+
+ If two nodes are in Same Sub Tree then one node is itsef LCA
+ If two nodes are in diff sub Tree then root of the current node is LCA
+ 
+ 
+ 
+ */
